@@ -11,18 +11,21 @@
 namespace Pod\Tools;
 
 use Pod\Base\Service\BaseService;
+use Pod\Base\Service\BaseInfo;
 use Pod\Base\Service\ApiRequestHandler;
 
 class Tools extends BaseService
 {
     private static $serviceProductId;
     private $header;
+    private static $jsonSchema;
     const BASE_URI = 'PLATFORM-ADDRESS';
     const SUB_URI = 'nzh/doServiceCall';
     const METHOD = 'POST';
 
     public function __construct($baseInfo)
     {
+        BaseInfo::initServerType(BaseInfo::PRODUCTION_SERVER);
         parent::__construct();
         self::$jsonSchema = json_decode(file_get_contents(__DIR__ . '/../config/validationSchema.json'), true);
         self::$serviceProductId = require __DIR__ . '/../config/serviceProductId.php';
@@ -56,7 +59,7 @@ class Tools extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         // prepare params to send
         $option[$paramKey]['scProductId'] = self::$serviceProductId[$apiName];
@@ -91,7 +94,7 @@ class Tools extends BaseService
             $paramKey => $params,
         ];
 
-        self::validateOption($apiName, $option, $paramKey);
+        self::validateOption($option, self::$jsonSchema[$apiName], $paramKey);
 
         // prepare params to send
         $option[$paramKey]['scProductId'] = self::$serviceProductId[$apiName];
