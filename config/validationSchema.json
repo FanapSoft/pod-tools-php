@@ -23,8 +23,7 @@
       "type": "object",
       "properties": {
         "billId": {
-          "type": "string",
-          "pattern" : "^[0-9]{4,11}[1-6][0-9]$"
+          "type": "string"
         },
         "scVoucherHash": {
           "type": "array",
@@ -88,8 +87,7 @@
           "pattern_description": "تاریخ به صورت yyyy/mm/dd وارد شود"
         },
         "billId": {
-          "type": "string",
-          "pattern" : "^[0-9]{4,11}[1-6][0-9]$"
+          "type": "string"
         },
         "paymentId": {
           "type": "string",
